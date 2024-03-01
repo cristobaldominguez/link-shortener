@@ -88,11 +88,10 @@ async function post_login(req) {
 
 // Middlewares
 function authenticate(req, res, next) {
-  const cookies = req.cookies[cookie_name]
   const jwt_auth = req.headers.authorization
 
   // Get token
-  const token = cookies ? cookies : jwt_auth ? get_token_from_jwt(jwt_auth) : null
+  const token = get_token_from_jwt(jwt_auth)
   if (!token) return res.redirect(redirect.for_unauthorized)
 
   // Verify token
