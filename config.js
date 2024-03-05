@@ -8,9 +8,6 @@ dotenv.config()
 // with 24 hour of token expiration
 const expirationToken = '24h'
 
-// Email format
-const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
-
 const port = process.env.PORT || 3000
 const root = dirname(fileURLToPath(import.meta.url))
 
@@ -31,8 +28,7 @@ const db = {
   user: process.env.POSTGRES_USER || 'pg_username',
   password: process.env.POSTGRES_PWD || 'pg_password',
   database: process.env.POSTGRES_DB || 'db_name',
-  port: Number(process.env.DB_PORT) || 5432,
-  allowExitOnIdle: true
+  port: Number(process.env.DB_PORT) || 5432
 }
 
-export { port, root, db, redirect, emailRegex, expirationToken, accessTokenSecret, cookieName }
+export { port, root, db, redirect, expirationToken, accessTokenSecret, cookieName }
