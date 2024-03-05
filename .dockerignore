@@ -1,10 +1,14 @@
 .git
+.gitignore
 .DS_Store
+.vscode
 
 .db
 node_modules
+.env
 
 .eslintrc
+
 .dockerignore
 Dockerfile
 docker-compose.yml
