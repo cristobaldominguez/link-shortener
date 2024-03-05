@@ -19,18 +19,8 @@ if (!accessTokenSecret) console.error('Error: No SECRET_KEY inside .env file')
 if (!cookieName) console.error('Error: No COOKIE_NAME inside .env file')
 
 // POST /auth/signup
-async function post_signup (req) {
-  if (!req.body.email) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.email') }), field: 'fields.email' })
-  if (!req.body.password) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password') }), field: 'fields.password' })
-  if (!req.body.password_confirm) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password_confirm') }), field: 'fields.password_confirm' })
-
-  const email = req.sanitize(req.body.email).toLowerCase()
-  const { password, password_confirm } = req.body
-
-  if (!email.match(email_regex)) { throw new AuthError({ message: i18next.t('errors.not_valid', { field: i18next.t('fields.email') }) }) }
-
-  if (!(email && password)) return new AuthError({ message: i18next.t('errors.data_format') })
-  if (password !== password_confirm) return new AuthError({ message: i18next.t('errors.no_presence', { first: i18next.t('fields.password'), second: i18next.t('fields.password_confirm') }) })
+async function postSignup (req) {
+  const { email, password } = req.body
 
   // creating a new user
   const user = { email, password }
@@ -56,14 +46,8 @@ async function post_signup (req) {
 }
 
 // POST /auth/login
-async function post_login (req) {
-  if (!req.body.email) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.email') }) })
-  if (!req.body.password) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password') }) })
-
-  const email = req.sanitize(req.body.email).toLowerCase()
-  const { password } = req.body
-
-  if (!email.match(email_regex)) { throw new AuthError({ message: i18next.t('errors.not_valid', { field: i18next.t('fields.email') }) }) }
+async function postLogin (req) {
+  const { email, password } = req.body
 
   const user = await getUserBy({ email })
   if (user) {
