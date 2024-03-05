@@ -12,12 +12,10 @@ const router = express.Router()
 // Routes
 // /auth/signup
 router.route('/signup')
-  .get(authController.get_signup)
   .post(validator('register'), authController.postSignup)
 
 // /auth/login
 router.route('/login')
-  .get(authController.get_login)
   .post(validator(), authController.postLogin)
 
 // /auth/logout

@@ -5,11 +5,6 @@ import { redirect, cookieName } from '../config.js'
 import authServices from '../services/auth_services.js'
 
 // Methods
-// GET /auth/signup
-function get_signup (_, res) {
-  res.render('auth/signup')
-}
-
 // POST /auth/signup
 async function postSignup (req, res) {
   const token = await authServices.postSignup(req, res)
@@ -24,11 +19,6 @@ async function postSignup (req, res) {
   if (token.is_an_error) throw token
 
   res.status(200).json(token)
-}
-
-// GET /auth/login
-async function get_login (_, res) {
-  res.render('auth/login')
 }
 
 // POST /auth/login
