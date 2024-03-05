@@ -4,19 +4,19 @@ import express from 'express'
 import mainController from '../controllers/main_controller.js'
 
 // Import Services
-import { authenticate, set_user } from '../services/auth_services.js'
+import { authenticate, setUser } from '../services/auth_services.js'
 
 // Router Creation
 const router = express.Router()
 
 // Routes
 // GET /
-router.get('/', mainController.get_home)
+router.get('/', mainController.getHome)
 
 // GET /unauthorized
-router.get('/unauthorized', mainController.get_unauthorized)
+router.get('/unauthorized', mainController.getUnauthorized)
 
 // POST /reset_db
-router.post('/reset_db', authenticate, set_user, mainController.reset_db)
+router.post('/reset_db', authenticate, setUser, mainController.resetDb)
 
 export default router

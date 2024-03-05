@@ -9,19 +9,19 @@ dotenv.config()
 const expirationToken = '24h'
 
 // Email format
-const email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
 
 const port = process.env.PORT || 3000
 const root = dirname(fileURLToPath(import.meta.url))
 
 const accessTokenSecret = process.env.SECRET_KEY
-const cookie_name = process.env.COOKIE_NAME
+const cookieName = process.env.COOKIE_NAME
 
 const redirect = {
   after: {
     login: '/',
     logout: '/',
-    signup: '/',
+    signup: '/'
   },
   for_unauthorized: '/auth/login'
 }
@@ -35,4 +35,4 @@ const db = {
   allowExitOnIdle: true
 }
 
-export { port, root, db, redirect, email_regex, expirationToken, accessTokenSecret, cookie_name }
+export { port, root, db, redirect, emailRegex, expirationToken, accessTokenSecret, cookieName }

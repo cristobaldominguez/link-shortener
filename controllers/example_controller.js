@@ -1,6 +1,6 @@
 // Methods
 // GET /examples/
-function get_index (req, res) {
+function getIndex (req, res) {
   if (req.expects_html) {
     return res.render('example/index', { layout: 'main', title: `Hello ${req.user.email}!`, text: `Hello ${req.user.email}! You're authenticated successfully` })
   }
@@ -9,5 +9,5 @@ function get_index (req, res) {
 }
 
 export default {
-  get_index
+  getIndex
 }

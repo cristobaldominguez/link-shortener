@@ -13,15 +13,15 @@ const router = express.Router()
 // /auth/signup
 router.route('/signup')
   .get(authController.get_signup)
-  .post(validator('register'), authController.post_signup)
+  .post(validator('register'), authController.postSignup)
 
 // /auth/login
 router.route('/login')
   .get(authController.get_login)
-  .post(validator(), authController.post_login)
+  .post(validator(), authController.postLogin)
 
 // /auth/logout
 router.route('/logout')
-  .delete(authController.delete_logout)
+  .delete(authController.deleteLogout)
 
 export default router

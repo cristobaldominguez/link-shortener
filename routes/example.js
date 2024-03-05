@@ -4,13 +4,13 @@ import express from 'express'
 import exampleController from '../controllers/example_controller.js'
 
 // Import Services
-import { authenticate, set_user } from '../services/auth_services.js'
+import { authenticate, setUser } from '../services/auth_services.js'
 
 // Router Creation
 const router = express.Router()
 
 // Routes
 // GET /examples/
-router.get('/', authenticate, set_user, exampleController.get_index)
+router.get('/', authenticate, setUser, exampleController.getIndex)
 
 export default router

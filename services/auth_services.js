@@ -3,23 +3,20 @@ import i18next from 'i18next'
 import jwt from 'jsonwebtoken'
 
 // Import Queries
-import { create_user, get_user_by } from '../db/queries/users.js'
+import { createUser, getUserBy } from '../db/queries/users.js'
 
 // ErrorHandling
 import AuthError from '../errors/auth_error.js'
 import CustomError from '../errors/custom_error.js'
 
 // Import Config
-import { redirect, email_regex, expirationToken } from '../config.js'
+import { redirect, expirationToken, accessTokenSecret, cookieName } from '../config.js'
 
 // Helpers
 import tokenIsExpirated from '../helpers/token_is_expirated.js'
 
-// Config
-import { accessTokenSecret, cookie_name } from '../config.js'
-
 if (!accessTokenSecret) console.error('Error: No SECRET_KEY inside .env file')
-if (!cookie_name) console.error('Error: No COOKIE_NAME inside .env file')
+if (!cookieName) console.error('Error: No COOKIE_NAME inside .env file')
 
 // POST /auth/signup
 async function post_signup (req) {
@@ -45,8 +42,8 @@ async function post_signup (req) {
   user.password = await bcrypt.hash(user.password, salt)
 
   try {
-    const saved_user = await create_user(user)
-    return generate_token({ user: await saved_user })
+    const savedUser = await createUser(user)
+    return generateToken({ user: await savedUser })
   } catch (err) {
     console.error(err)
     if (err.is_an_error) {
@@ -68,13 +65,13 @@ async function post_login (req) {
 
   if (!email.match(email_regex)) { throw new AuthError({ message: i18next.t('errors.not_valid', { field: i18next.t('fields.email') }) }) }
 
-  const user = await get_user_by({ email })
+  const user = await getUserBy({ email })
   if (user) {
     // check user password with hashed password stored in the database
     const validPassword = await bcrypt.compare(password, user.password)
 
     if (validPassword) {
-      return generate_token({ user })
+      return generateToken({ user })
     } else {
       return new AuthError({ message: i18next.t('errors.invalid_email_password'), status: 400 })
     }
@@ -85,10 +82,10 @@ async function post_login (req) {
 
 // Middlewares
 function authenticate (req, res, next) {
-  const jwt_auth = req.headers.authorization
+  const jwtAuth = req.headers.authorization
 
   // Get token
-  const token = get_token_from_jwt(jwt_auth)
+  const token = getTokenFromJWT(jwtAuth)
   if (!token) return res.redirect(redirect.for_unauthorized)
 
   // Verify token
@@ -99,7 +96,7 @@ function authenticate (req, res, next) {
   next()
 }
 
-function set_user (req, _, next) {
+function setUser (req, _, next) {
   req.user = null
   if (!req.token) return
 
@@ -111,25 +108,26 @@ function set_user (req, _, next) {
   })
 }
 
-function get_token_from_jwt (bearer) {
+function getTokenFromJWT (bearer) {
   return bearer.split(' ')[1]
 }
 
-function generate_token ({ user }) {
+function generateToken ({ user }) {
   const token = jwt.sign(user, accessTokenSecret, { expiresIn: expirationToken })
+  const { id, email } = user
   return {
     user: {
-      id: user.id,
-      email: user.email
+      id,
+      email
     },
     accessToken: token
   }
 }
 
 export {
-  set_user,
+  setUser,
   authenticate,
-  generate_token
+  generateToken
 }
 
-export default { post_signup, post_login }
+export default { postSignup, postLogin }

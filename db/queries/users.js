@@ -5,7 +5,7 @@ import pool from '../pool.js'
 import AuthError from '../../errors/auth_error.js'
 
 // User Creation
-async function create_user ({ email, password }) {
+async function createUser ({ email, password }) {
   const query = {
     text: 'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
     values: [email, password]
@@ -21,12 +21,12 @@ async function create_user ({ email, password }) {
   }
 }
 
-async function get_user_by (obj) {
+async function getUserBy (obj) {
   // Maps every key/value into array of strings and then into string
-  const query_str = Object.entries(obj).map(arr => `${arr[0]} = '${arr[1]}'`).join(', ')
+  const queryStr = Object.entries(obj).map(arr => `${arr[0]} = '${arr[1]}'`).join(', ')
 
   const query = {
-    text: `SELECT * FROM users WHERE ${query_str} AND active = true `
+    text: `SELECT * FROM users WHERE ${queryStr} AND active = true `
   }
 
   try {
@@ -38,7 +38,7 @@ async function get_user_by (obj) {
   }
 }
 
-async function get_users () {
+async function getUsers () {
   const query = {
     text: 'SELECT * FROM users WHERE active = true order by id',
     values: []
@@ -54,7 +54,7 @@ async function get_users () {
 }
 
 export {
-  create_user,
-  get_user_by,
-  get_users
+  createUser,
+  getUserBy,
+  getUsers
 }

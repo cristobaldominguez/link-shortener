@@ -1,6 +1,6 @@
 import pool from '../pool.js'
 
-async function get_urls () {
+async function getUrls () {
   const query = {
     text: 'SELECT * FROM urls WHERE active = true order by id',
     values: []
@@ -16,7 +16,7 @@ async function get_urls () {
 }
 
 export {
-  get_urls
+  getUrls
 }
 
 /* Examples */

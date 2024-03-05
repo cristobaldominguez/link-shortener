@@ -1,26 +1,26 @@
 import i18next from 'i18next'
 import AuthError from '../errors/auth_error.js'
-import { get_users } from '../db/queries/users.js'
-import { reset_db as resetDB } from '../db/seed/reset_db.js'
+import { getUsers } from '../db/queries/users.js'
+import seed from '../db/seed/reset_db.js'
 
 // Methods
-
 // GET /
-async function get_home (req, res) {
-  const users = await get_users()
+async function getHome (req, res) {
+  const users = await getUsers()
   res.json({ users })
 }
 
 // GET /unauthorized
-function get_unauthorized (req, res) {
+function getUnauthorized (req, res) {
   res.sendStatus(401)
 }
 
-function reset_db (req, res, next) {
+// POST /reset_db
+function resetDb (req, res, next) {
   if (req.user.id !== 1) throw new AuthError({ message: i18next.t('errors.not_allowed') })
 
   try {
-    resetDB()
+    seed.resetDb()
     res.json({ reset_db: true })
   } catch (e) {
     console.error(e)
@@ -29,7 +29,7 @@ function reset_db (req, res, next) {
 }
 
 export default {
-  get_home,
-  get_unauthorized,
-  reset_db
+  getHome,
+  getUnauthorized,
+  resetDb
 }

@@ -1,11 +1,8 @@
 // Import Config
-import { redirect } from '../config.js'
+import { redirect, cookieName } from '../config.js'
 
 // Import Services
 import authServices from '../services/auth_services.js'
-
-// DotEnv
-const cookieName = process.env.COOKIE_NAME
 
 // Methods
 // GET /auth/signup
@@ -14,8 +11,8 @@ function get_signup (_, res) {
 }
 
 // POST /auth/signup
-async function post_signup (req, res) {
-  const token = await authServices.post_signup(req, res)
+async function postSignup (req, res) {
+  const token = await authServices.postSignup(req, res)
 
   if (req.expects_html) {
     if (token.is_an_error) return res.status(req.error.status).render('auth/signup', { error: req.error.toJson(), user: { email: req.body.email } })
@@ -35,8 +32,8 @@ async function get_login (_, res) {
 }
 
 // POST /auth/login
-async function post_login (req, res) {
-  const token = await authServices.post_login(req, res)
+async function postLogin (req, res) {
+  const token = await authServices.postLogin(req, res)
 
   if (req.expects_html) {
     if (token.is_an_error) return res.status(req.error.status).render('auth/login', { error: req.error.toJson(), user: { email: req.body.email } })
@@ -51,15 +48,13 @@ async function post_login (req, res) {
 }
 
 // DELETE /auth/logout
-function delete_logout (_, res) {
+function deleteLogout (_, res) {
   res.clearCookie(cookieName)
   res.redirect(redirect.after.logout)
 }
 
 export default {
-  get_signup,
-  post_signup,
-  get_login,
-  post_login,
-  delete_logout
+  postSignup,
+  postLogin,
+  deleteLogout
 }

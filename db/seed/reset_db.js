@@ -1,6 +1,6 @@
 import pool from '../pool.js'
 
-async function reset_db () {
+async function resetDb () {
   try {
     // Drop Tables
     await pool.query(`
@@ -44,11 +44,9 @@ async function reset_db () {
   } catch (e) {
     console.error(e)
     return e
-  } finally {
-
   }
 }
 
-export {
-  reset_db
+export default {
+  resetDb
 }
