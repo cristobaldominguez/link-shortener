@@ -1,5 +1,5 @@
 class CustomError extends Error {
-  constructor(message) {
+  constructor (message) {
     super(message)
 
     this.name = ''
@@ -7,7 +7,7 @@ class CustomError extends Error {
     this.is_an_error = true
   }
 
-  toJson() {
+  toJson () {
     return {
       error: {
         name: this.name,

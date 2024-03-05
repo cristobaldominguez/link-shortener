@@ -1,7 +1,7 @@
 import pg from 'pg'
-import { db as pg_connection } from '../config.js'
+import { db as pgConnection } from '../config.js'
 
 const { Pool } = pg
-const pool = new Pool(pg_connection)
+const pool = new Pool(pgConnection)
 
 export default pool

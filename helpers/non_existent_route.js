@@ -1,4 +1,4 @@
-import AccessError from "../errors/access_error.js"
+import AccessError from '../errors/access_error.js'
 
 const nonExistentRoute = (req, res) => {
   const { originalUrl: url, method } = req

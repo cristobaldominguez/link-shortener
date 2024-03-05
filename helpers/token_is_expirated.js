@@ -1,4 +1,4 @@
-const tokenIsExpirated = ({ exp: expirationTimeStamp }) => {
+function tokenIsExpirated ({ exp: expirationTimeStamp }) {
   const currentTimeStamp = parseInt(Date.now() / 1000)
 
   console.log({

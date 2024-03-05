@@ -22,7 +22,6 @@ import checkValidJSON from './middlewares/check_valid_JSON_middleware.js'
 // Helpers
 import { nonExistentRoute } from './helpers/non_existent_route.js'
 
-
 // dotEnv Config
 dotenv.config()
 
@@ -58,7 +57,6 @@ app.use(setContentType)
 
 // Public Folder
 app.use(express.static('public'))
-
 
 // App Routes
 app.use(mainRoutes)

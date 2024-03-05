@@ -4,6 +4,7 @@
 .db
 node_modules
 
+.eslintrc
 .dockerignore
 Dockerfile
 docker-compose.yml

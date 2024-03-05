@@ -5,16 +5,15 @@ import pool from '../pool.js'
 import AuthError from '../../errors/auth_error.js'
 
 // User Creation
-async function create_user({ email, password }) {
+async function create_user ({ email, password }) {
   const query = {
-    text: `INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *`,
+    text: 'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
     values: [email, password]
   }
 
   try {
     const result = await pool.query(query)
     return result.rows[0]
-
   } catch (e) {
     // Error for already existing user
     if (e.code === '23505') { throw new AuthError({ message: i18next.t('errors.email_exists') }) }
@@ -22,7 +21,7 @@ async function create_user({ email, password }) {
   }
 }
 
-async function get_user_by(obj) {
+async function get_user_by (obj) {
   // Maps every key/value into array of strings and then into string
   const query_str = Object.entries(obj).map(arr => `${arr[0]} = '${arr[1]}'`).join(', ')
 
@@ -33,23 +32,21 @@ async function get_user_by(obj) {
   try {
     const result = await pool.query(query)
     return result.rows[0]
-
   } catch (e) {
     console.error(e)
     return e
   }
 }
 
-async function get_users() {
+async function get_users () {
   const query = {
-    text: `SELECT * FROM users WHERE active = true order by id`,
+    text: 'SELECT * FROM users WHERE active = true order by id',
     values: []
   }
 
   try {
     const result = await pool.query(query)
     return result.rows
-
   } catch (e) {
     console.error(e)
     return e

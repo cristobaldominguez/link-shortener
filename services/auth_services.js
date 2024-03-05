@@ -22,7 +22,7 @@ if (!accessTokenSecret) console.error('Error: No SECRET_KEY inside .env file')
 if (!cookie_name) console.error('Error: No COOKIE_NAME inside .env file')
 
 // POST /auth/signup
-async function post_signup(req) {
+async function post_signup (req) {
   if (!req.body.email) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.email') }), field: 'fields.email' })
   if (!req.body.password) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password') }), field: 'fields.password' })
   if (!req.body.password_confirm) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password_confirm') }), field: 'fields.password_confirm' })
@@ -47,20 +47,19 @@ async function post_signup(req) {
   try {
     const saved_user = await create_user(user)
     return generate_token({ user: await saved_user })
-
   } catch (err) {
     console.error(err)
     if (err.is_an_error) {
       req.error = err
       return err
     }
-    
+
     return new CustomError()
   }
 }
 
 // POST /auth/login
-async function post_login(req) {
+async function post_login (req) {
   if (!req.body.email) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.email') }) })
   if (!req.body.password) throw new ValidationError({ message: i18next.t('errors.no_presence', { field: i18next.t('fields.password') }) })
 
@@ -73,21 +72,19 @@ async function post_login(req) {
   if (user) {
     // check user password with hashed password stored in the database
     const validPassword = await bcrypt.compare(password, user.password)
-    
+
     if (validPassword) {
       return generate_token({ user })
-
     } else {
       return new AuthError({ message: i18next.t('errors.invalid_email_password'), status: 400 })
     }
-
   } else {
     return new AuthError({ message: i18next.t('errors.invalid_email_password'), status: 401 })
   }
 }
 
 // Middlewares
-function authenticate(req, res, next) {
+function authenticate (req, res, next) {
   const jwt_auth = req.headers.authorization
 
   // Get token
@@ -102,9 +99,9 @@ function authenticate(req, res, next) {
   next()
 }
 
-function set_user(req, _, next) {
+function set_user (req, _, next) {
   req.user = null
-  if (!req.token) return 
+  if (!req.token) return
 
   jwt.verify(req.token, accessTokenSecret, (err, user) => {
     if (err) return
@@ -114,11 +111,11 @@ function set_user(req, _, next) {
   })
 }
 
-function get_token_from_jwt(bearer) {
+function get_token_from_jwt (bearer) {
   return bearer.split(' ')[1]
 }
 
-function generate_token({ user }) {
+function generate_token ({ user }) {
   const token = jwt.sign(user, accessTokenSecret, { expiresIn: expirationToken })
   return {
     user: {

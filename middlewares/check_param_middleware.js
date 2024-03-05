@@ -1,14 +1,15 @@
+import i18next from 'i18next'
 import ValidationError from '../errors/validation_error.js'
 
-function convertToNumber(num) {
+function convertToNumber (num) {
   return typeof num === 'number' && !isNaN(num)
 }
 
-function check_param(req, res, next) {
+function checkParam (req, res, next) {
   const { params } = req
   const checking = []
 
-  for(const key in params) {
+  for (const key in params) {
     checking.push(parseInt(params[key], 10))
   }
 
@@ -18,4 +19,4 @@ function check_param(req, res, next) {
   next()
 }
 
-export default check_param
+export default checkParam

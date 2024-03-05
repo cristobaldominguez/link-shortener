@@ -1,8 +1,7 @@
 import pool from '../pool.js'
 
-async function reset_db() {
+async function reset_db () {
   try {
-
     // Drop Tables
     await pool.query(`
       DROP TABLE IF EXISTS urls;
@@ -42,7 +41,6 @@ async function reset_db() {
         FOREIGN KEY (user_id) REFERENCES users(id)
       );
     `)
-
   } catch (e) {
     console.error(e)
     return e

@@ -1,4 +1,4 @@
-function setContentType(req, res, next) {
+function setContentType (req, res, next) {
   if (!req.accepts('text/html')) {
     res.set({ 'content-type': 'application/json; charset=utf-8' })
   }
