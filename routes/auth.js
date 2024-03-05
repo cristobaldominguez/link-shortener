@@ -3,19 +3,22 @@ import express from 'express'
 // Import Controllers
 import authController from '../controllers/auth_controller.js'
 
+// Import Middlewares
+import validator from '../middlewares/validator_middleware.js'
+
 // Router Creation
 const router = express.Router()
 
 // Routes
 // /auth/signup
 router.route('/signup')
-  .post(auth_controller.post_signup)
   .get(authController.get_signup)
+  .post(validator('register'), authController.post_signup)
 
 // /auth/login
 router.route('/login')
-  .post(auth_controller.post_login)
   .get(authController.get_login)
+  .post(validator(), authController.post_login)
 
 // /auth/logout
 router.route('/logout')
