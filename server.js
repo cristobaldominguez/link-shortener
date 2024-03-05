@@ -3,7 +3,7 @@ import { port } from './config.js'
 import express from 'express'
 import expressSanitizer from 'express-sanitizer'
 import i18next from 'i18next'
-import FilesystemBackend from 'i18next-node-fs-backend'
+import FilesystemBackend from 'i18next-fs-backend'
 import i18nextMiddleware from 'i18next-http-middleware'
 
 // ErrorHandling
