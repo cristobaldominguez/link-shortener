@@ -8,10 +8,12 @@ COPY ./docker-healthcheck /usr/local/bin/
 WORKDIR /home/node/app
 # RUN mkdir -p ./node_modules && chown -R node:node .
 
+# Updates NPM
+RUN npm install -g npm@10.5.0
+
 COPY package*.json ./
-# RUN npm install && npm cache clean --force
+RUN npm install && npm cache clean --force
 COPY . .
-RUN npm install
 
 HEALTHCHECK CMD ["docker-healthcheck"]
 

@@ -1,3 +1,4 @@
+import i18next from 'i18next'
 import AccessError from '../errors/access_error.js'
 
 const nonExistentRoute = (req, res) => {
