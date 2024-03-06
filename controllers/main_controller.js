@@ -21,7 +21,7 @@ function resetDb (req, res, next) {
 
   try {
     seed.resetDb()
-    res.json({ reset_db: true })
+    res.json({ reset_db: true, date: new Date() })
   } catch (e) {
     console.error(e)
     return e

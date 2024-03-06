@@ -12,7 +12,7 @@ function validator (validator) {
 
       next()
     } catch (err) {
-      console.log(err)
+      console.error(err)
       if (err.isJoi) throw new ValidationError({ message: err.message, status: 422 })
 
       next()
