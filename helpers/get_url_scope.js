@@ -1,5 +1,5 @@
-function getURLScope ({ url }) {
-  const urlSplitted = url.split('/')
+function getURLScope ({ originalUrl }) {
+  const urlSplitted = originalUrl.split('/')
   return urlSplitted[urlSplitted.length - 1]
 }
 

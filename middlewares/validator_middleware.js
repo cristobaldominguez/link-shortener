@@ -9,6 +9,7 @@ function validator (validator) {
     try {
       const validated = await validators[url].validateAsync(req.body, { abortEarly: false })
       req.body = validated
+
       next()
     } catch (err) {
       console.log(err)

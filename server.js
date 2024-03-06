@@ -1,10 +1,10 @@
 import dotenv from 'dotenv'
 import { port } from './config.js'
 import express from 'express'
-import expressSanitizer from 'express-sanitizer'
 import i18next from 'i18next'
 import FilesystemBackend from 'i18next-fs-backend'
 import i18nextMiddleware from 'i18next-http-middleware'
+import sanitizer from 'perfect-express-sanitizer'
 
 // ErrorHandling
 import 'express-async-errors'
@@ -50,8 +50,8 @@ app.use(checkValidJSON)
 // Request Accepts HTML
 app.use(acceptsFormatMiddleware)
 
-// express-sanitizer middleware
-app.use(expressSanitizer())
+// Perfect Express Sanitizer middleware
+app.use(sanitizer.clean({ xss: true, sql: true, sqlLevel: 4 }))
 
 // Sets Content-Type header
 app.use(setContentType)

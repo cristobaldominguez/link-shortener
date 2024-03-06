@@ -93,6 +93,7 @@ function setUser (req, _, next) {
 }
 
 function getTokenFromJWT (bearer) {
+  // ToDo: validar que exista la palabra Bearer
   return bearer.split(' ')[1]
 }
 
