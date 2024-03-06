@@ -1,9 +1,8 @@
 import Joi from 'joi'
 
-const registerSchema = Joi.object({
-  email: Joi.string().email().lowercase().required(),
-  password: Joi.string().min(6).required(),
-  password_confirm: Joi.ref('password')
+const registersSchema = Joi.object({
+  slug: Joi.string().trim().alphanum().min(4).lowercase(),
+  address: Joi.string().uri().required()
 })
 
-export default registerSchema
+export default registersSchema

@@ -1,9 +1,9 @@
 import pool from '../pool.js'
 
-async function getUrls () {
+async function getRegisters () {
   const client = await pool.connect()
   const query = {
-    text: 'SELECT * FROM urls WHERE active = true order by id',
+    text: 'SELECT * FROM registers WHERE active = true order by id',
     values: []
   }
 
@@ -19,7 +19,7 @@ async function getUrls () {
 }
 
 export {
-  getUrls
+  getRegisters
 }
 
 /* Examples */

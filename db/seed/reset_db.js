@@ -4,7 +4,7 @@ async function resetDb () {
   try {
     // Drop Tables
     await pool.query(`
-      DROP TABLE IF EXISTS urls;
+      DROP TABLE IF EXISTS registers;
       DROP TABLE IF EXISTS users;
     `)
 
@@ -24,13 +24,13 @@ async function resetDb () {
       );
     `)
 
-    // Adds URLs Table
+    // Adds Registers Table
     await pool.query(`
-      CREATE TABLE urls(
+      CREATE TABLE registers(
         id SERIAL,
 
         slug VARCHAR(30) NOT NULL,
-        address VARCHAR(255) NOT NULL,
+        url VARCHAR(255) NOT NULL,
         user_id INT NOT NULL,
 
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
