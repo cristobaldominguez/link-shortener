@@ -16,13 +16,13 @@ services:
       - 5432:5432
 
   link-shortener:
-    container_name: link-shortener
+    container_name: linkShortener
     build:
       context: .
       args:
         node_env: development
       tags:
-        - cristobaldominguez/linkshortener:0.0.1
+        - cristobaldominguez/linkshortener:1.0.0
       platforms:
         - "linux/arm64"
         - "linux/amd64"
