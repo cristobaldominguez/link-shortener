@@ -1,4 +1,4 @@
-import { getRegisters } from '../db/queries/registers.js'
+import { createRegister, getRegisters } from '../db/queries/registers.js'
 import slugGenerator from '../helpers/slug_generator.js'
 
 // Methods
@@ -11,11 +11,13 @@ async function getIndex (req, res) {
 
 // POST /registers
 async function postRegister (req, res) {
+  const { id: userId } = req.user
   req.body.slug = req.body.slug ?? slugGenerator()
-  const { slug, address } = req.body
+  const { slug, url } = req.body
 
-  console.log({ slug, address })
-  res.json({ slug, address })
+  const register = await createRegister({ slug, url, userId })
+
+  res.json({ register })
 }
 
 export default {

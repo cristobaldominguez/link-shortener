@@ -1,9 +1,9 @@
 import login from './login.validator.js'
 import signup from './signup.validator.js'
-import register from './register.validator.js'
+import registers from './registers.validator.js'
 
 export default {
   login,
   signup,
-  register
+  registers
 }

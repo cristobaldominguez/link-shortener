@@ -18,8 +18,27 @@ async function getRegisters () {
   }
 }
 
+async function createRegister ({ slug, url, userId }) {
+  const client = await pool.connect()
+  const query = {
+    text: 'INSERT INTO registers (slug, url, user_id) VALUES ($1, $2, $3) RETURNING id, slug, url, user_id, created_at',
+    values: [slug, url, userId]
+  }
+
+  try {
+    const result = await client.query(query)
+    return result.rows[0]
+  } catch (e) {
+    console.error(e)
+    return e
+  } finally {
+    client.release()
+  }
+}
+
 export {
-  getRegisters
+  getRegisters,
+  createRegister
 }
 
 /* Examples */
