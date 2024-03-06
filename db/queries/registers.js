@@ -1,9 +1,11 @@
+import i18next from 'i18next'
+import ContentError from '../../errors/content_error.js'
 import pool from '../pool.js'
 
 async function getRegisters () {
   const client = await pool.connect()
   const query = {
-    text: 'SELECT * FROM registers WHERE active = true order by id',
+    text: 'SELECT id, slug, url, user_id, created_at FROM registers WHERE active = true order by id',
     values: []
   }
 
@@ -29,6 +31,27 @@ async function createRegister ({ slug, url, userId }) {
     const result = await client.query(query)
     return result.rows[0]
   } catch (e) {
+    if (e.code === '23505') throw new ContentError({ message: i18next.t('errors.registers_slug_key', { slug }) })
+
+    console.error(e)
+    return e
+  } finally {
+    client.release()
+  }
+}
+
+async function getRegisterBy (obj) {
+  const queryStr = Object.entries(obj).map(arr => `${arr[0]} = '${arr[1]}'`).join(', ')
+
+  const client = await pool.connect()
+  const query = {
+    text: `SELECT id, slug, url, user_id FROM registers WHERE ${queryStr} AND active = true `
+  }
+
+  try {
+    const result = await client.query(query)
+    return result.rows[0]
+  } catch (e) {
     console.error(e)
     return e
   } finally {
@@ -38,6 +61,7 @@ async function createRegister ({ slug, url, userId }) {
 
 export {
   getRegisters,
+  getRegisterBy,
   createRegister
 }
 

@@ -29,7 +29,7 @@ async function resetDb () {
       CREATE TABLE registers(
         id SERIAL,
 
-        slug VARCHAR(30) NOT NULL,
+        slug VARCHAR(30) NOT NULL UNIQUE,
         url VARCHAR(255) NOT NULL,
         user_id INT NOT NULL,
 

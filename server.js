@@ -13,6 +13,7 @@ import 'express-async-errors'
 import mainRoutes from './routes/main.js'
 import authRoutes from './routes/auth.js'
 import registerRoutes from './routes/register.js'
+import notNestedRoutes from './routes/not_nested.js'
 
 // Middlewares
 import errorMiddleware from './middlewares/error_middleware.js'
@@ -63,6 +64,7 @@ app.use(express.static('public'))
 app.use(mainRoutes)
 app.use('/auth', authRoutes)
 app.use('/registers', registerRoutes)
+app.use(notNestedRoutes)
 
 // Redirect to 404 Page
 app.get('*', nonExistentRoute)

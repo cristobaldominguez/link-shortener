@@ -15,7 +15,9 @@
     "invalid_parameter": "Invalid Parameter.",
     "email_exists": "Email already exists",
     "token_expired": "Token expired",
-    "not_allowed": "Action not allowed"
+    "not_allowed": "Action not allowed",
+    "forbidden_slug": "{{slug}} can't be used",
+    "registers_slug_key": "Slug {{slug}} already exists."
   },
   "routes": {
     "non_existent": "Non Existent Route."
