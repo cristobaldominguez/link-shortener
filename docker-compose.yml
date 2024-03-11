@@ -19,6 +19,8 @@ services:
     container_name: linkShortener
     build:
       context: .
+      dockerfile: Dockerfile
+      target: dev
       args:
         node_env: development
       tags:
